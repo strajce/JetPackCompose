@@ -1,6 +1,6 @@
 package com.example.jetpackcompose.network
 
-import com.example.jetpackcompose.network.model.RecipeDTO
+import com.example.jetpackcompose.network.model.RecipeDto
 import com.example.jetpackcompose.network.responses.RecipeSearchResponse
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -19,5 +19,5 @@ interface RecipeService {
     suspend fun get(
         @Header("Authorization") token: String,
         @Query("id") id: Int
-    ): RecipeDTO
+    ): RecipeDto
 }

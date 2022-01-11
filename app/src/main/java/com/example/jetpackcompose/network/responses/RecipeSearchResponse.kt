@@ -1,10 +1,10 @@
 package com.example.jetpackcompose.network.responses
 
-import com.example.jetpackcompose.network.model.RecipeDTO
+import com.example.jetpackcompose.network.model.RecipeDto
 import com.google.gson.annotations.SerializedName
 
-class RecipeSearchResponse(
+data class RecipeSearchResponse(
     var count: Int,
     @SerializedName("results")
-    var recipe: List<RecipeDTO>
+    var recipe: List<RecipeDto>
 )

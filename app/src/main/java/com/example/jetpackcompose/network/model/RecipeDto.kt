@@ -2,7 +2,7 @@ package com.example.jetpackcompose.network.model
 
 import com.google.gson.annotations.SerializedName
 
-class RecipeDTO(
+data class RecipeDto(
 
     @SerializedName("pk")
     var pk: Int? = null,
