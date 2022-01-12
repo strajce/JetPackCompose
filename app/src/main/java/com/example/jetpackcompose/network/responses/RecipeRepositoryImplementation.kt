@@ -7,10 +7,10 @@ import com.example.jetpackcompose.network.model.RecipeDtoMapper
 
 class RecipeRepositoryImplementation(
     private val recipeService: RecipeService,
-    private val mapper: RecipeDtoMapper
+    private val recipeDtoMapper: RecipeDtoMapper
 ) : RecipeRepository {
     override suspend fun search(token: String, page: Int, query: String): List<Recipe> {
-        return mapper.toDomainList(
+        return recipeDtoMapper.toDomainList(
             recipeService.search(
                 token = token,
                 page = page,
@@ -20,6 +20,6 @@ class RecipeRepositoryImplementation(
     }
 
     override suspend fun get(token: String, id: Int): Recipe {
-        return mapper.mapToDomainModel(recipeService.get(token = token, id = id))
+        return recipeDtoMapper.mapToDomainModel(recipeService.get(token = token, id = id))
     }
 }
