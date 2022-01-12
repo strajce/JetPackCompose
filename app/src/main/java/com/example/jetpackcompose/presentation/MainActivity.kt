@@ -1,4 +1,4 @@
-package com.example.jetpackcompose
+package com.example.jetpackcompose.presentation
 
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +8,7 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.jetpackcompose.R
 import com.example.jetpackcompose.ui.theme.JetPackComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

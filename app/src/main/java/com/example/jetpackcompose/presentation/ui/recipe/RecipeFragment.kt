@@ -1,4 +1,4 @@
-package com.example.jetpackcompose
+package com.example.jetpackcompose.presentation.ui.recipe
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,8 +14,19 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import com.example.jetpackcompose.presentation.ui.recipe_list.RecipeListViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RecipeFragment : Fragment() {
+
+    val viewModel: RecipeListViewModel by activityViewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        println("RecipeFragment: ${viewModel}")
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

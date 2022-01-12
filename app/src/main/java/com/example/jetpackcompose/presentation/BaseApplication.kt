@@ -1,4 +1,4 @@
-package com.example.jetpackcompose
+package com.example.jetpackcompose.presentation
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
