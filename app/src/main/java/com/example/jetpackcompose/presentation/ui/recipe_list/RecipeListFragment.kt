@@ -4,19 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
-import com.example.jetpackcompose.R
 import com.example.jetpackcompose.presentation.components.RecipeCard
-import com.example.jetpackcompose.util.TAG
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -43,14 +46,67 @@ class RecipeListFragment : Fragment() {
             setContent {
 
                 val recipes = viewModel.recipes.value
+//                val query = remember {
+//                    mutableStateOf("beef")
+//                }
+                val query = viewModel.query.value
 
-                LazyColumn{
-                     itemsIndexed(
-                         items = recipes
-                     ) {
-                         index, recipe ->
-                         RecipeCard(recipe = recipe, onClick = {})
-                     }
+                Column {
+                    Surface(
+                        modifier = Modifier.fillMaxWidth(),
+                        color = MaterialTheme.colors.primary,
+                        elevation = 8.dp,
+                    ) {
+                        Row(modifier = Modifier.fillMaxWidth()) {
+                            TextField(
+                                modifier = Modifier
+                                    .fillMaxWidth(0.95f)
+                                    .padding(8.dp),
+                                colors = TextFieldDefaults.textFieldColors(
+                                    backgroundColor = MaterialTheme.colors.secondary,
+                                ),
+                                value = query,
+                                onValueChange = { newValue ->
+                                    viewModel.onQueryChange(newValue)
+                                },
+                                label = {
+                                    Text(text = "Search")
+                                },
+                                keyboardOptions = KeyboardOptions(
+                                    keyboardType = KeyboardType.Text,
+                                    imeAction = ImeAction.Search,
+                                ),
+                                leadingIcon = {
+                                    Icon(
+                                        imageVector = Icons.Filled.Search,
+                                        contentDescription = null,
+                                    )
+                                },
+                                keyboardActions = KeyboardActions(onSearch = {
+                                    viewModel.newSearch(
+                                        query = query,
+                                    )
+                                    clearFocus()
+                                }),
+                            )
+                        }
+                    }
+//                    TextField(
+//                        value = query,
+//                        onValueChange = { newValue ->
+//                            viewModel.onQueryChange(newValue)
+//                        },
+//                    )
+
+                    Spacer(Modifier.padding(10.dp))
+
+                    LazyColumn {
+                        itemsIndexed(
+                            items = recipes
+                        ) { index, recipe ->
+                            RecipeCard(recipe = recipe, onClick = {})
+                        }
+                    }
                 }
 
 //                for (recipe in recipes) {
