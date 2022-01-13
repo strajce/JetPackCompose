@@ -23,11 +23,10 @@ fun RecipeCard(
     onClick: () -> Unit,
 ) {
     Card(
-        shape = MaterialTheme.shapes.small,
+        shape = MaterialTheme.shapes.medium,
         modifier = Modifier
             .padding(
                 bottom = 6.dp,
-                top = 6.dp,
             )
             .fillMaxWidth()
             .clickable(onClick = { onClick() }),
