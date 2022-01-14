@@ -110,6 +110,12 @@ class RecipeFragment : Fragment() {
                     }) {
                         Text(text = "Count backward")
                     }
+                    Divider(modifier = Modifier.padding(24.dp))
+                    Button(onClick = {
+                        count = 0
+                    }) {
+                        Text("Reset counter")
+                    }
                 }
             }
         }
