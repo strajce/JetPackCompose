@@ -9,6 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.jetpackcompose.R
+import com.example.jetpackcompose.presentation.ui.recipe_list.RecipeListFragment
 import com.example.jetpackcompose.ui.theme.JetPackComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -16,10 +17,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val TAG: String = "AppDebug"
-
-    @Inject
-    lateinit var someRandomString: String
+//    @Inject
+//    lateinit var someRandomString: String
 
     @Inject
     lateinit var app: BaseApplication
