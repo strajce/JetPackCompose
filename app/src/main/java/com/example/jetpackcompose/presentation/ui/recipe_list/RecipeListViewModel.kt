@@ -34,7 +34,7 @@ constructor(
         viewModelScope.launch {
             loading.value = true
             resetSearchState()
-            delay(5000)
+//            delay(15000)
             val recipe = repository.search(
                 token = token,
                 page = 1,
