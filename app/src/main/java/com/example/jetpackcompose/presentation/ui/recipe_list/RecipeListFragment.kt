@@ -51,6 +51,7 @@ class RecipeListFragment : Fragment() {
                     val query = viewModel.query.value
                     val selectedCategory = viewModel.selectedCategory.value
                     val loading = viewModel.loading.value
+                    val page = viewModel.page.value
 
                     Column {
                         Scaffold(
@@ -88,8 +89,13 @@ class RecipeListFragment : Fragment() {
                                     itemsIndexed(
                                         items = recipes
                                     ) { index, recipe ->
+                                        viewModel.onChangeRecipeScrollPosition(index)
+                                        if ((index + 1) >= (page * PAGE_SIZE) && !loading) {
+                                            viewModel.nextPage()
+                                        }
                                         RecipeCard(recipe = recipe, onClick = {
-                                            findNavController().navigate(R.id.action_recipeListFragment_to_recipeFragment)
+                                            findNavController()
+                                                .navigate(R.id.action_recipeListFragment_to_recipeFragment)
                                         })
                                     }
                                 }
