@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
@@ -21,9 +22,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.example.jetpackcompose.R
 import com.example.jetpackcompose.presentation.BaseApplication
-import com.example.jetpackcompose.presentation.components.CircularProgressBar
-import com.example.jetpackcompose.presentation.components.RecipeCard
-import com.example.jetpackcompose.presentation.components.SearchAppBar
+import com.example.jetpackcompose.presentation.components.*
 import com.example.jetpackcompose.presentation.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -54,40 +53,48 @@ class RecipeListFragment : Fragment() {
                     val loading = viewModel.loading.value
 
                     Column {
-                        SearchAppBar(
-                            query = query,
-                            onQueryChanged = viewModel::onQueryChange,
-                            onExecuteSearch = viewModel::newSearch,
-                            categoryPosition = viewModel.categoryPosition,
-                            selectedCategory = selectedCategory,
-                            onSelectedCategoryChanged = viewModel::onSelectedCategoryChanged,
-                            clearKeyBoardFocus = KeyboardActions(onSearch = {
-                                clearFocus()
-                            }),
-                            onToggleTheme = {
-                                application.toggleLightTheme()
-                            }
-                        )
-
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .background(color = MaterialTheme.colors.background)
+                        Scaffold(
+                            topBar = {
+                                SearchAppBar(
+                                    query = query,
+                                    onQueryChanged = viewModel::onQueryChange,
+                                    onExecuteSearch = viewModel::newSearch,
+                                    categoryPosition = viewModel.categoryPosition,
+                                    selectedCategory = selectedCategory,
+                                    onSelectedCategoryChanged = viewModel::onSelectedCategoryChanged,
+                                    clearKeyBoardFocus = KeyboardActions(onSearch = {
+                                        clearFocus()
+                                    }),
+                                    onToggleTheme = {
+                                        application.toggleLightTheme()
+                                    }
+                                )
+                            },
+                            bottomBar = {
+                                BottomBar(findNavController())
+                            },
+                            drawerContent = {
+                                DrawerMenu()
+                            },
                         ) {
-                            LazyColumn(
-                                modifier = Modifier.padding(top = 6.dp)
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(color = MaterialTheme.colors.background)
                             ) {
-                                itemsIndexed(
-                                    items = recipes
-                                ) { index, recipe ->
-                                    RecipeCard(recipe = recipe, onClick = {
-                                        findNavController().navigate(R.id.action_recipeListFragment_to_recipeFragment)
-//                                    Toast.makeText(context, "Index : ${index}", Toast.LENGTH_SHORT)
-//                                        .show()
-                                    })
+                                LazyColumn(
+                                    modifier = Modifier.padding(top = 6.dp)
+                                ) {
+                                    itemsIndexed(
+                                        items = recipes
+                                    ) { index, recipe ->
+                                        RecipeCard(recipe = recipe, onClick = {
+                                            findNavController().navigate(R.id.action_recipeListFragment_to_recipeFragment)
+                                        })
+                                    }
                                 }
+                                CircularProgressBar(isDisplayed = loading)
                             }
-                            CircularProgressBar(isDisplayed = loading)
                         }
                     }
                 }
