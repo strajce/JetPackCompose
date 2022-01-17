@@ -2,6 +2,7 @@ package com.example.jetpackcompose.presentation.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -24,7 +25,7 @@ fun CircularProgressBar(
                 horizontalArrangement = Arrangement.Center,
             ) {
                 CircularProgressIndicator(
-                    color = Color.Blue
+                    color = MaterialTheme.colors.primary
                 )
             }
             Row(

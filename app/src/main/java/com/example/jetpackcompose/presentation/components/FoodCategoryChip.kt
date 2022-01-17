@@ -21,8 +21,8 @@ fun FoodCategoryChip(
     Surface(
         modifier = Modifier.padding(end = 8.dp),
         elevation = 8.dp,
-        shape = MaterialTheme.shapes.large,
-        color = if (isSelected) Color.LightGray else Color.Blue
+        shape = MaterialTheme.shapes.medium,
+        color = if (isSelected) Color.LightGray else MaterialTheme.colors.primary
     ) {
         Row(
             modifier = Modifier

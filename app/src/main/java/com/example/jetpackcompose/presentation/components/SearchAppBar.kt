@@ -1,20 +1,20 @@
 package com.example.jetpackcompose.presentation.components
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.example.jetpackcompose.presentation.theme.transparent
 import com.example.jetpackcompose.presentation.ui.recipe_list.FoodCategory
 import com.example.jetpackcompose.presentation.ui.recipe_list.getAllFoodCategories
 
@@ -27,22 +27,26 @@ fun SearchAppBar(
     selectedCategory: FoodCategory?,
     onSelectedCategoryChanged: (String) -> Unit,
     clearKeyBoardFocus: KeyboardActions,
+    onToggleTheme: () -> Unit,
 ) {
     Surface(
         modifier = Modifier.fillMaxWidth(),
-        color = Color.White,
+        color = MaterialTheme.colors.surface,
         elevation = 8.dp,
     ) {
         Column {
-            Row(modifier = Modifier.fillMaxWidth()) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
                 TextField(
                     modifier = Modifier
-                        .fillMaxWidth(0.95f)
+                        .fillMaxWidth(0.9f)
                         .padding(top = 8.dp, start = 8.dp, end = 8.dp),
                     colors = TextFieldDefaults.textFieldColors(
-                        backgroundColor = Color.LightGray,
+                        backgroundColor = MaterialTheme.colors.surface,
                     ),
-                    value = if(query == FoodCategory.ALL.toString()) "" else query,
+                    value = if (query == FoodCategory.ALL.toString()) "" else query,
                     onValueChange = { newValue ->
                         onQueryChanged(newValue)
                     },
@@ -64,12 +68,21 @@ fun SearchAppBar(
                         clearKeyBoardFocus
                     }),
                 )
+                IconButton(
+                    onClick = onToggleTheme,
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.MoreVert,
+                        contentDescription = null
+                    )
+                }
             }
             ScrollableTabRow(
                 modifier = Modifier.padding(8.dp),
                 selectedTabIndex = categoryPosition,
                 edgePadding = 0.dp,
-                backgroundColor = Color.White,
+                backgroundColor = MaterialTheme.colors.surface,
+                contentColor = transparent,
                 tabs = {
                     for (category in getAllFoodCategories()) {
                         FoodCategoryChip(
