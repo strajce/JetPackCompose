@@ -1,6 +1,9 @@
 package com.example.jetpackcompose.presentation.components
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -10,19 +13,21 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.example.jetpackcompose.presentation.theme.transparent
 import com.example.jetpackcompose.presentation.ui.recipe_list.FoodCategory
+import com.example.jetpackcompose.presentation.ui.recipe_list.RecipeListEvent
+import com.example.jetpackcompose.presentation.ui.recipe_list.RecipeListEvent.NewSearchEvent
 import com.example.jetpackcompose.presentation.ui.recipe_list.getAllFoodCategories
+import kotlin.reflect.KFunction1
 
 @Composable
 fun SearchAppBar(
     query: String,
     onQueryChanged: (String) -> Unit,
-    onExecuteSearch: () -> Unit,
+    onExecuteSearch: KFunction1<RecipeListEvent, Unit>,
     categoryPosition: Int,
     selectedCategory: FoodCategory?,
     onSelectedCategoryChanged: (String) -> Unit,
@@ -64,7 +69,7 @@ fun SearchAppBar(
                         )
                     },
                     keyboardActions = KeyboardActions(onSearch = {
-                        onExecuteSearch()
+                        onExecuteSearch(NewSearchEvent)
                         clearKeyBoardFocus
                     }),
                 )
@@ -92,7 +97,7 @@ fun SearchAppBar(
                                 onSelectedCategoryChanged(it)
                             },
                             onExecuteSearch = {
-                                onExecuteSearch()
+                                onExecuteSearch(NewSearchEvent)
                             }
                         )
                     }

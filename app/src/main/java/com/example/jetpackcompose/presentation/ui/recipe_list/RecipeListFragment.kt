@@ -24,6 +24,7 @@ import com.example.jetpackcompose.R
 import com.example.jetpackcompose.presentation.BaseApplication
 import com.example.jetpackcompose.presentation.components.*
 import com.example.jetpackcompose.presentation.theme.AppTheme
+import com.example.jetpackcompose.presentation.ui.recipe_list.RecipeListEvent.NextPageEvent
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -59,7 +60,7 @@ class RecipeListFragment : Fragment() {
                                 SearchAppBar(
                                     query = query,
                                     onQueryChanged = viewModel::onQueryChange,
-                                    onExecuteSearch = viewModel::newSearch,
+                                    onExecuteSearch = viewModel::onTriggerEvent,
                                     categoryPosition = viewModel.categoryPosition,
                                     selectedCategory = selectedCategory,
                                     onSelectedCategoryChanged = viewModel::onSelectedCategoryChanged,
@@ -91,7 +92,7 @@ class RecipeListFragment : Fragment() {
                                     ) { index, recipe ->
                                         viewModel.onChangeRecipeScrollPosition(index)
                                         if ((index + 1) >= (page * PAGE_SIZE) && !loading) {
-                                            viewModel.nextPage()
+                                            viewModel.onTriggerEvent(NextPageEvent)
                                         }
                                         RecipeCard(recipe = recipe, onClick = {
                                             findNavController()

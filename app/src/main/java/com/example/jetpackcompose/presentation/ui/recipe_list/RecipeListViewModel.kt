@@ -1,11 +1,15 @@
 package com.example.jetpackcompose.presentation.ui.recipe_list
 
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.jetpackcompose.Repository.RecipeRepository
 import com.example.jetpackcompose.domain.model.Recipe
+import com.example.jetpackcompose.presentation.ui.recipe_list.RecipeListEvent.NewSearchEvent
+import com.example.jetpackcompose.presentation.ui.recipe_list.RecipeListEvent.NextPageEvent
+import com.example.jetpackcompose.util.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -31,42 +35,55 @@ constructor(
     private var recipeListScrollPosition = 0
 
     init {
-        newSearch()
+        onTriggerEvent(NewSearchEvent)
     }
 
-    fun newSearch() {
+    fun onTriggerEvent(event: RecipeListEvent) {
         viewModelScope.launch {
-            loading.value = true
-            resetSearchState()
-//            delay(5000)
-            val recipe = repository.search(
-                token = token,
-                page = 1,
-                query = if (selectedCategory.value == FoodCategory.ALL) "" else query.value,
-            )
-            recipes.value = recipe
-            loading.value = false
+            try {
+                when (event) {
+                    is NewSearchEvent -> {
+                        newSearch()
+                    }
+                    is NextPageEvent -> {
+                        nextPage()
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "onTriggerEvent: Exception: ${e}, ${e.cause}")
+            }
         }
     }
 
-    fun nextPage() {
-        viewModelScope.launch {
-            // prevent duplicate events due to recompose happening to quickly scrolling
-            if ((recipeListScrollPosition + 1) >= (page.value * PAGE_SIZE)) {
-                loading.value = true
-                incrementPage()
+    private suspend fun newSearch() {
+        loading.value = true
+        resetSearchState()
+//            delay(5000)
+        val recipe = repository.search(
+            token = token,
+            page = 1,
+            query = if (selectedCategory.value == FoodCategory.ALL) "" else query.value,
+        )
+        recipes.value = recipe
+        loading.value = false
+    }
 
-                delay(2000)
+    private suspend fun nextPage() {
+        // prevent duplicate events due to recompose happening to quickly scrolling
+        if ((recipeListScrollPosition + 1) >= (page.value * PAGE_SIZE)) {
+            loading.value = true
+            incrementPage()
 
-                if (page.value > 1) {
-                    val result = repository.search(
-                        token = token,
-                        page = page.value,
-                        query = query.value
-                    )
-                    appendRecipes(result)
-                    loading.value = false
-                }
+            delay(2000)
+
+            if (page.value > 1) {
+                val result = repository.search(
+                    token = token,
+                    page = page.value,
+                    query = query.value
+                )
+                appendRecipes(result)
+                loading.value = false
             }
         }
     }
@@ -94,7 +111,7 @@ constructor(
         selectedCategory.value = newCategory
         onChangeCategoryPosition(FoodCategory.valueOf(newCategory.toString()).ordinal)
         onQueryChange(category)
-        newSearch()
+        onTriggerEvent(NewSearchEvent)
     }
 
     fun onChangeCategoryPosition(position: Int) {
