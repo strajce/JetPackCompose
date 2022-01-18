@@ -83,9 +83,9 @@ constructor(
                     query = query.value
                 )
                 appendRecipes(result)
-                loading.value = false
             }
         }
+        loading.value = false
     }
 
     private fun appendRecipes(recipes: List<Recipe>) {

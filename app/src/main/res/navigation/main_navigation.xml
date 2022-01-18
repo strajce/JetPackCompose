@@ -9,11 +9,18 @@
         android:name="com.example.jetpackcompose.presentation.ui.recipe_list.RecipeListFragment"
         android:label="RecipeListFragment" >
         <action
-            android:id="@+id/action_recipeListFragment_to_recipeFragment"
+            android:id="@+id/action_recipeListFragment_to_recipeAnimationFragment"
             app:destination="@id/recipeFragment" />
+        <action
+            android:id="@+id/action_recipeListFragment_to_recipeDetailsFragment"
+            app:destination="@id/recipeDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/recipeFragment"
-        android:name="com.example.jetpackcompose.presentation.ui.recipe.RecipeFragment"
+        android:name="com.example.jetpackcompose.presentation.ui.recipe.RecipeAnimationFragment"
         android:label="RecipeFragment" />
+    <fragment
+        android:id="@+id/recipeDetailsFragment"
+        android:name="com.example.jetpackcompose.presentation.ui.recipe.RecipeDetailsFragment"
+        android:label="RecipeDetailsFragment" />
 </navigation>

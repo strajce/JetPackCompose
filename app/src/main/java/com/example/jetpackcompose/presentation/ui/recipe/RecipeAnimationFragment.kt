@@ -30,7 +30,7 @@ import com.example.jetpackcompose.presentation.ui.recipe_list.RecipeListViewMode
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RecipeFragment : Fragment() {
+class RecipeAnimationFragment : Fragment() {
 
     val viewModel: RecipeListViewModel by activityViewModels()
     val isVisible = mutableStateOf(true)

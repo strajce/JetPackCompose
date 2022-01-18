@@ -10,6 +10,7 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.jetpackcompose.R
 
 @Composable
 fun BottomBar(
@@ -21,7 +22,8 @@ fun BottomBar(
         BottomNavigationItem(
             selected = false,
             onClick = {
-//                navigationController.navigate()
+                navigationController
+                    .navigate(R.id.action_recipeListFragment_to_recipeAnimationFragment)
             },
             icon = {
                 Icon(
@@ -32,7 +34,10 @@ fun BottomBar(
         )
         BottomNavigationItem(
             selected = true,
-            onClick = { },
+            onClick = {
+                navigationController
+                    .navigate(R.id.action_recipeListFragment_to_recipeAnimationFragment)
+            },
             icon = {
                 Icon(
                     imageVector = Icons.Default.Star,
@@ -42,7 +47,10 @@ fun BottomBar(
         )
         BottomNavigationItem(
             selected = false,
-            onClick = { },
+            onClick = {
+                navigationController
+                    .navigate(R.id.action_recipeListFragment_to_recipeAnimationFragment)
+            },
             icon = {
                 Icon(
                     imageVector = Icons.Default.Settings,

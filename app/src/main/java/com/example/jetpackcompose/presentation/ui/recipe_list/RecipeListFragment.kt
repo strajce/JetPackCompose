@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -94,9 +95,15 @@ class RecipeListFragment : Fragment() {
                                         if ((index + 1) >= (page * PAGE_SIZE) && !loading) {
                                             viewModel.onTriggerEvent(NextPageEvent)
                                         }
+
                                         RecipeCard(recipe = recipe, onClick = {
                                             findNavController()
-                                                .navigate(R.id.action_recipeListFragment_to_recipeFragment)
+                                                .navigate(R.id.action_recipeListFragment_to_recipeDetailsFragment)
+                                            Toast.makeText(
+                                                context,
+                                                "Index number ${index}",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
                                         })
                                     }
                                 }
