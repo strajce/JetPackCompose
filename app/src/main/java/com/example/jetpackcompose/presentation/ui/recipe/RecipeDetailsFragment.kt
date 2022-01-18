@@ -52,7 +52,7 @@ class RecipeDetailsFragment : Fragment() {
                         item {
                             recipe?.let {
                                 RecipeView(recipe = recipe)
-                            } ?: CircularProgressBar(isDisplayed = true)
+                            } ?: CircularProgressBar(isDisplayed = loading)
                         }
                     }
                 }
