@@ -1,23 +1,29 @@
 package com.example.jetpackcompose.presentation.ui.recipe
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Text
+import androidx.compose.foundation.background
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.MaterialTheme
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.jetpackcompose.presentation.BaseApplication
+import com.example.jetpackcompose.presentation.components.CircularProgressBar
+import com.example.jetpackcompose.presentation.components.RecipeView
+import com.example.jetpackcompose.presentation.theme.AppTheme
 import com.example.jetpackcompose.presentation.ui.recipe.RecipeDetailsEvent.GetRecipeEvent
-import com.example.jetpackcompose.util.TAG
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class RecipeDetailsFragment : Fragment() {
+
+    @Inject
+    lateinit var application: BaseApplication
 
     private val viewModel: RecipeDetailsViewModel by viewModels()
 
@@ -25,7 +31,6 @@ class RecipeDetailsFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.getInt("recipeId")?.let { recipeId ->
             viewModel.onTriggerEvent(GetRecipeEvent(recipeId))
-            Log.d(TAG, "Selected ID: ${recipeId}")
         }
     }
 
@@ -36,26 +41,23 @@ class RecipeDetailsFragment : Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                val loading = viewModel.loading.value
-                val recipe = viewModel.recipe.value
+                AppTheme(darkTheme = application.isDark.value) {
+                    val loading = viewModel.loading.value
+                    val recipe = viewModel.recipe.value
 
-                Column {
-                    Text(
-                        text = recipe?.let {
-                            "Selected recipe id : ${recipe.id}"
-                        } ?: "loading ...",
-                        style = TextStyle(
-                            fontSize = 21.sp,
-                        )
-                    )
-                    Text(
-                        text = "${recipe?.title}",
-                        style = TextStyle(
-                            fontSize = 21.sp,
-                        )
-                    )
+                    LazyColumn(
+                        modifier = Modifier
+                            .background(MaterialTheme.colors.background)
+                    ) {
+                        item {
+                            recipe?.let {
+                                RecipeView(recipe = recipe)
+                            } ?: CircularProgressBar(isDisplayed = true)
+                        }
+                    }
                 }
             }
         }
+
     }
 }

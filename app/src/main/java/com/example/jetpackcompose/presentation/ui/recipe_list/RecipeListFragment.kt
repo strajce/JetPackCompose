@@ -101,11 +101,11 @@ class RecipeListFragment : Fragment() {
                                             recipe.id?.let { it1 -> bundle.putInt("recipeId", it1) }
                                             findNavController()
                                                 .navigate(R.id.action_recipeListFragment_to_recipeDetailsFragment, bundle)
-                                            Toast.makeText(
-                                                context,
-                                                "Index number ${index}",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
+//                                            Toast.makeText(
+//                                                context,
+//                                                "Index number ${index}",
+//                                                Toast.LENGTH_SHORT
+//                                            ).show()
                                         })
                                     }
                                 }

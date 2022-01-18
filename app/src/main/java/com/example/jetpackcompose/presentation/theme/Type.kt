@@ -1,5 +1,7 @@
 package com.example.jetpackcompose.presentation.theme
 
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.Typography
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle

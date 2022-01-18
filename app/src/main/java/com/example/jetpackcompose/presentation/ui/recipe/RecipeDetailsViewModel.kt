@@ -30,7 +30,6 @@ constructor(
     val loading = mutableStateOf(false)
 
     fun onTriggerEvent(event: RecipeDetailsEvent) {
-        Log.d(TAG, "onTriggerEvent ${event}")
         viewModelScope.launch {
             try {
                 when (event) {

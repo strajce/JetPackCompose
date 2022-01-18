@@ -5,8 +5,8 @@ import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -21,10 +21,7 @@ fun BottomBar(
     ) {
         BottomNavigationItem(
             selected = false,
-            onClick = {
-                navigationController
-                    .navigate(R.id.action_recipeListFragment_to_recipeAnimationFragment)
-            },
+            onClick = {},
             icon = {
                 Icon(
                     imageVector = Icons.Default.Home,
@@ -40,17 +37,14 @@ fun BottomBar(
             },
             icon = {
                 Icon(
-                    imageVector = Icons.Default.Star,
+                    imageVector = Icons.Default.Person,
                     contentDescription = null,
                 )
             }
         )
         BottomNavigationItem(
             selected = false,
-            onClick = {
-                navigationController
-                    .navigate(R.id.action_recipeListFragment_to_recipeAnimationFragment)
-            },
+            onClick = {},
             icon = {
                 Icon(
                     imageVector = Icons.Default.Settings,
