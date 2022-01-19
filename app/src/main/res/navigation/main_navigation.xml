@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_recipeListFragment_to_recipeDetailsFragment"
             app:destination="@id/recipeDetailsFragment" />
+        <action
+            android:id="@+id/action_recipeListFragment_to_rocketFragment"
+            app:destination="@id/rocketFragment" />
     </fragment>
     <fragment
         android:id="@+id/recipeFragment"
@@ -23,4 +26,8 @@
         android:id="@+id/recipeDetailsFragment"
         android:name="com.example.jetpackcompose.presentation.ui.recipe.RecipeDetailsFragment"
         android:label="RecipeDetailsFragment" />
+    <fragment
+        android:id="@+id/rocketFragment"
+        android:name="com.example.jetpackcompose.presentation.ui.rocket.RocketFragment"
+        android:label="RocketFragment" />
 </navigation>
